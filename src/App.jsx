@@ -13,7 +13,7 @@ function App() {
       <Hero />
       <About />
       <Skills />
-      <Header />
+      {/* <Header /> */}
       <Footer />
       <BackToTop />
       {/* Other components will go here */}
