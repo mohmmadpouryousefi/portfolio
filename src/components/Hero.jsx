@@ -26,7 +26,7 @@ const Hero = () => {
 
             <div className="name-wrapper">
               <h1 className={`hero-name ${isLoaded ? "active" : ""}`}>
-                MohammadDev
+                Mohammad
               </h1>
               <div className={`hero-role ${isLoaded ? "active" : ""}`}>
                 Web Developer
