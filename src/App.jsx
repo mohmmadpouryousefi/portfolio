@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import Skills from "./components/Skills";
 import About from "./components/About";
 import Footer from "./components/Footer";
+import BackToTop from "./components/BackToTop";
 import "./App.css";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Skills />
       <Header />
       <Footer />
+      <BackToTop />
       {/* Other components will go here */}
     </div>
   );
