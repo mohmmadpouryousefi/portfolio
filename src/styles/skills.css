@@ -155,6 +155,7 @@
   font-weight: 500;
   color: #333;
   transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .skill-badge:hover {
