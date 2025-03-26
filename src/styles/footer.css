@@ -38,8 +38,7 @@
   line-height: 1.6;
 }
 
-.footer-links,
-.footer-contact {
+.footer-links {
   flex: 1;
   min-width: 200px;
 }
@@ -118,13 +117,17 @@
 }
 
 @media (max-width: 768px) {
+
+
+
   .footer-content {
     flex-direction: column;
     gap: 30px;
   }
 
   .footer-info,
-  .footer-links {
+  .footer-links,
+  .footer-contact {
     min-width: 100%;
   }
 }
