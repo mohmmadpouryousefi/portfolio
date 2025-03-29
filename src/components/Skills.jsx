@@ -59,19 +59,6 @@ const Skills = () => {
                   <div className="skill-bar">
                     <div
                       className="skill-progress"
-                      style={{ width: "90%" }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="skill-item">
-                <SiPhp className="skill-icon php-icon" />
-                <div>
-                  <h4>PHP</h4>
-                  <div className="skill-bar">
-                    <div
-                      className="skill-progress"
                       style={{ width: "85%" }}
                     ></div>
                   </div>
@@ -85,7 +72,7 @@ const Skills = () => {
                   <div className="skill-bar">
                     <div
                       className="skill-progress"
-                      style={{ width: "98%" }}
+                      style={{ width: "95%" }}
                     ></div>
                   </div>
                 </div>
@@ -99,6 +86,18 @@ const Skills = () => {
                     <div
                       className="skill-progress"
                       style={{ width: "95%" }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div className="skill-item">
+                <SiPhp className="skill-icon php-icon" />
+                <div>
+                  <h4>PHP</h4>
+                  <div className="skill-bar">
+                    <div
+                      className="skill-progress"
+                      style={{ width: "65%" }}
                     ></div>
                   </div>
                 </div>
