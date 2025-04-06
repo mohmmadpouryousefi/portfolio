@@ -1,32 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../styles/about.css";
 import { FaCode, FaServer, FaDatabase, FaCloud } from "react-icons/fa";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 const About = () => {
-  useEffect(() => {
-    // Function to handle animations on scroll
-    const animateOnScroll = () => {
-      const elements = document.querySelectorAll(".animate");
-
-      elements.forEach((element) => {
-        const elementPosition = element.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-
-        if (elementPosition < windowHeight - 100) {
-          element.classList.add("animated");
-        }
-      });
-    };
-
-    // Initial check for elements in viewport
-    animateOnScroll();
-
-    // Add scroll event listener
-    window.addEventListener("scroll", animateOnScroll);
-
-    // Clean up
-    return () => window.removeEventListener("scroll", animateOnScroll);
-  }, []);
+  useScrollAnimation();
 
   return (
     <section id="about" className="about">
