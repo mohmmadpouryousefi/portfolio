@@ -1,0 +1,87 @@
+.blog-editor {
+  padding: 100px 20px 60px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+.editor-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+}
+
+.editor-container h1 {
+  margin-bottom: 30px;
+  color: #0f172a;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.cancel-btn,
+.submit-btn {
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn {
+  background-color: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+}
+
+.submit-btn {
+  background-color: #0f172a;
+  color: white;
+  border: none;
+}
+
+.cancel-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.submit-btn:hover {
+  background-color: #1e293b;
+}
+
+.submit-btn:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
