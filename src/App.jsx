@@ -51,10 +51,9 @@ function App() {
               </>
             }
           />
-          <Route path="/blog" element={<Blog />} />
+          {/*  <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
 
-          {/* Admin routes */}
           <Route path="/admin/login" element={<Login />} />
           <Route
             path="/admin/blog/new"
@@ -63,7 +62,7 @@ function App() {
                 <BlogEditor />
               </ProtectedRoute>
             }
-          />
+          /> */}
         </Routes>
       </div>
     </Router>
