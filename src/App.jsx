@@ -7,14 +7,14 @@ import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
 import Loading from "./components/Loading";
 import Navbar from "./components/Navbar";
-import Blog from "./pages/blog";
-import BlogPost from "./pages/blogPost";
+/* import Blog from "./pages/blog";
+import BlogPost from "./pages/blogPost"; */
 import "./App.css";
-import BlogEditor from "./pages/admin/BlogEditor";
+/* import BlogEditor from "./pages/admin/BlogEditor"; */
 
 // Add these imports
-import Login from "./pages/admin/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
+/* import Login from "./pages/admin/Login";
+import ProtectedRoute from "./components/ProtectedRoute"; */
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
