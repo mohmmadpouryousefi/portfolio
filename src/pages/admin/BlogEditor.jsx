@@ -12,38 +12,70 @@ const BlogEditor = () => {
     image: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setPost((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Inside the handleSubmit function, update the fetch call
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError("");
 
     try {
-      // Here you would send the data to your backend API
-      // For now, we'll just simulate a successful submission
-      console.log("Submitting post:", post);
+      // Get token from localStorage
+      const token = localStorage.getItem("token");
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
+      // Call the backend API to create a new post
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        },
+        body: JSON.stringify(post),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.msg || "Failed to create post");
+      }
 
       alert("Post created successfully!");
       navigate("/blog");
     } catch (error) {
+      setError(error.message || "An error occurred while creating the post");
       console.error("Error creating post:", error);
-      alert("Failed to create post. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("token");
+    navigate("/admin/login");
+  };
+
   return (
     <div className="blog-editor">
       <div className="editor-container">
-        <h1>Create New Blog Post</h1>
+        <div className="editor-header">
+          <h1>Create New Blog Post</h1>
+          <button onClick={handleLogout} className="logout-btn">
+            Logout
+          </button>
+        </div>
+
+        {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -60,20 +92,15 @@ const BlogEditor = () => {
 
           <div className="form-group">
             <label htmlFor="category">Category</label>
-            <select
+            <input
+              type="text"
               id="category"
               name="category"
               value={post.category}
               onChange={handleChange}
               required
-            >
-              <option value="">Select a category</option>
-              <option value="Frontend">Frontend</option>
-              <option value="Backend">Backend</option>
-              <option value="JavaScript">JavaScript</option>
-              <option value="CSS">CSS</option>
-              <option value="React">React</option>
-            </select>
+              placeholder="e.g. Web Development, Design, JavaScript"
+            />
           </div>
 
           <div className="form-group">
@@ -85,19 +112,8 @@ const BlogEditor = () => {
               onChange={handleChange}
               required
               rows="3"
+              placeholder="A brief summary of your post"
             ></textarea>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="image">Featured Image URL</label>
-            <input
-              type="url"
-              id="image"
-              name="image"
-              value={post.image}
-              onChange={handleChange}
-              required
-            />
           </div>
 
           <div className="form-group">
@@ -108,8 +124,22 @@ const BlogEditor = () => {
               value={post.content}
               onChange={handleChange}
               required
-              rows="15"
+              rows="10"
+              placeholder="Your full blog post content"
             ></textarea>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="image">Image URL</label>
+            <input
+              type="text"
+              id="image"
+              name="image"
+              value={post.image}
+              onChange={handleChange}
+              required
+              placeholder="https://example.com/image.jpg"
+            />
           </div>
 
           <div className="form-actions">
