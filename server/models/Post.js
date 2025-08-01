@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-
+const { Schema } = mongoose;
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
