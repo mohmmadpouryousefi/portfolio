@@ -12,75 +12,153 @@ const BlogPost = () => {
     const fetchPost = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/posts/${slug}`
-        );
+        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+        const response = await fetch(`${apiUrl}/posts/${slug}`);
 
         if (!response.ok) {
           if (response.status === 404) {
             throw new Error("Post not found");
           }
-          throw new Error("Failed to fetch post");
+          throw new Error(`Failed to fetch post: ${response.status}`);
         }
 
         const data = await response.json();
-        setPost(data);
+        console.log("Post data:", data); // Debug log
+
+        if (data.success && data.post) {
+          setPost(data.post);
+        } else {
+          throw new Error("Invalid response format");
+        }
       } catch (err) {
-        setError(err.message || "An error occurred while fetching the post");
+        setError(err.message);
         console.error("Error fetching post:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPost();
+    if (slug) {
+      fetchPost();
+    }
   }, [slug]);
 
   if (loading) {
-    return <div className="loading-spinner">Loading post...</div>;
+    return (
+      <div className="blog-post-page">
+        <div className="loading-spinner">Loading post...</div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="post-not-found">{error}</div>;
+    return (
+      <div className="blog-post-page">
+        <div className="error-message">
+          <h2>Error</h2>
+          <p>{error}</p>
+          <Link to="/blog" className="back-to-blog">
+            ← Back to Blog
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   if (!post) {
-    return <div className="post-not-found">Post not found</div>;
+    return (
+      <div className="blog-post-page">
+        <div className="error-message">
+          <h2>Post Not Found</h2>
+          <p>The blog post you're looking for doesn't exist.</p>
+          <Link to="/blog" className="back-to-blog">
+            ← Back to Blog
+          </Link>
+        </div>
+      </div>
+    );
   }
+
+  // Helper function to format date safely
+  const formatDate = (dateString) => {
+    try {
+      if (!dateString) return "Unknown date";
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return "Invalid date";
+      return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    } catch (error) {
+      console.error("Date formatting error:", error);
+      return "Unknown date";
+    }
+  };
+
+  // Helper function to get author safely
+  const getAuthor = (post) => {
+    return post.author || "Unknown Author";
+  };
 
   return (
     <div className="blog-post-page">
       <div className="blog-post-container">
-        <Link to="/blog" className="back-to-blog">
-          &larr; Back to Blog
-        </Link>
-
         <div className="blog-post-header">
-          <h1>{post.title}</h1>
+          <Link to="/blog" className="back-to-blog">
+            ← Back to Blog
+          </Link>
+          
+          <div className="post-category-badge">{post.category}</div>
+          
+          <h1 className="post-title">{post.title}</h1>
+          
           <div className="post-meta">
             <span className="post-date">
-              {new Date(post.createdAt).toLocaleDateString()}
+              {formatDate(post.createdAt)}
             </span>
-            <span className="post-author">By {post.author}</span>
-            <span className="post-category">{post.category}</span>
+            <span className="post-author">
+              By {getAuthor(post)}
+            </span>
           </div>
         </div>
 
-        <div className="blog-post-featured-image">
-          <img src={post.image} alt={post.title} />
+        {post.image && (
+          <div className="post-featured-image">
+            <img 
+              src={post.image} 
+              alt={post.title}
+              onError={(e) => {
+                e.target.style.display = 'none';
+              }}
+            />
+          </div>
+        )}
+
+        <div className="post-content">
+          <div className="post-excerpt">
+            <p>{post.excerpt}</p>
+          </div>
+          
+          <div className="post-body">
+            {/* Split content by newlines and render as paragraphs */}
+            {post.content.split('\n').map((paragraph, index) => (
+              paragraph.trim() && (
+                <p key={index}>{paragraph.trim()}</p>
+              )
+            ))}
+          </div>
         </div>
 
-        <div
-          className="blog-post-content"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-
-        <div className="blog-post-share">
-          <h3>Share this post</h3>
-          <div className="share-buttons">
-            <button className="share-btn twitter">Twitter</button>
-            <button className="share-btn facebook">Facebook</button>
-            <button className="share-btn linkedin">LinkedIn</button>
+        <div className="post-footer">
+          <div className="post-tags">
+            <span className="tag">{post.category}</span>
+          </div>
+          
+          <div className="post-navigation">
+            <Link to="/blog" className="back-to-blog-btn">
+              View All Posts
+            </Link>
           </div>
         </div>
       </div>
