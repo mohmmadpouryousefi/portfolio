@@ -236,11 +236,14 @@
 
 .blog-post-card {
   background: #ffffff;
-  border: 2px solid #f1f5f9;
+  border: 1px solid #f2c855;
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
   position: relative;
+  display: flex;
+  flex-direction: column; /* Make the card a flex container */
+  height: 100%; /* Ensure consistent height */
 }
 
 .blog-post-card:hover {
@@ -254,6 +257,7 @@
   height: 240px;
   overflow: hidden;
   background: #f8fafc;
+  flex-shrink: 0; /* Prevent image from shrinking */
 }
 
 .post-image img {
@@ -286,6 +290,9 @@
   padding: 30px;
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .post-title {
@@ -333,9 +340,10 @@
 
 .post-excerpt {
   color: #4a5568;
-  margin-bottom: 20px;
+  margin-bottom: auto; /* This pushes the read-more button to the bottom */
   line-height: 1.6;
   font-size: 0.95rem;
+  flex-grow: 1; /* Takes up available space */
 }
 
 .read-more {
@@ -350,21 +358,8 @@
   background: transparent;
   border: 2px solid #f29b55;
   border-radius: 6px;
-}
-
-.read-more::after {
-  content: "→";
-  transition: transform 0.3s ease;
-}
-
-.read-more:hover {
-  background: #f29b55;
-  color: #ffffff;
-  transform: translateX(3px);
-}
-
-.read-more:hover::after {
-  transform: translateX(3px);
+  margin-top: 20px; /* Add some space above the button */
+  align-self: flex-start; /* Align button to start of flex container */
 }
 
 /* No Posts Message */
@@ -567,7 +562,7 @@
   .blog-post-card {
     background: white !important;
     box-shadow: none !important;
-    border: 1px solid #ccc !important;
+    border: 1px solid #766464 !important;
   }
 
   .new-post-btn,
