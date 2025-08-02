@@ -97,4 +97,4 @@ const authRole = (roles = []) => {
   };
 };
 
-export { auth, authRole };
+export default auth;
