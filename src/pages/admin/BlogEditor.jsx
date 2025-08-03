@@ -19,7 +19,6 @@ const BlogEditor = () => {
     setPost((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Inside the handleSubmit function, update the fetch call
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -29,24 +28,43 @@ const BlogEditor = () => {
       // Get token from localStorage
       const token = localStorage.getItem("token");
 
+      console.log("Token exists:", !!token); // Debug log
+      console.log("Token preview:", token ? token.substring(0, 20) + "..." : "No token"); // Debug log
+
       if (!token) {
-        throw new Error("Authentication required");
+        throw new Error("Authentication required. Please login first.");
       }
 
+      // Validate token format (JWT should have 3 parts separated by dots)
+      const tokenParts = token.split('.');
+      if (tokenParts.length !== 3) {
+        throw new Error("Invalid token format. Please login again.");
+      }
+
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+      console.log("API URL:", apiUrl); // Debug log
+
       // Call the backend API to create a new post
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/posts`, {
+      const response = await fetch(`${apiUrl}/posts`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-auth-token": token,
+          "x-auth-token": token, // This is correct for your backend
         },
         body: JSON.stringify(post),
       });
 
       const data = await response.json();
+      console.log("Response data:", data); // Debug log
 
       if (!response.ok) {
-        throw new Error(data.msg || "Failed to create post");
+        // Handle specific error cases
+        if (response.status === 401) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("isAuthenticated");
+          throw new Error("Session expired. Please login again.");
+        }
+        throw new Error(data.msg || `Server error: ${response.status}`);
       }
 
       alert("Post created successfully!");
@@ -54,6 +72,13 @@ const BlogEditor = () => {
     } catch (error) {
       setError(error.message || "An error occurred while creating the post");
       console.error("Error creating post:", error);
+      
+      // If it's an auth error, redirect to login
+      if (error.message.includes("Authentication") || error.message.includes("Session expired")) {
+        setTimeout(() => {
+          navigate("/admin/login");
+        }, 2000);
+      }
     } finally {
       setIsSubmitting(false);
     }
