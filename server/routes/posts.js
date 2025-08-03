@@ -70,6 +70,7 @@ router.post("/", auth, async (req, res) => {
       content,
       category,
       image,
+      author: req.user.username || "Admin", // Ensure author is set
     });
 
     const post = await newPost.save();
