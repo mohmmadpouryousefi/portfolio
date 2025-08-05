@@ -9,6 +9,21 @@ const Hero = () => {
     setIsLoaded(true);
   }, []);
 
+  // Function to scroll to next section
+  const scrollToNextSection = () => {
+    const nextSection =
+      document.querySelector(".about") ||
+      document.querySelector(".projects") ||
+      document.querySelector("section:nth-of-type(2)");
+
+    if (nextSection) {
+      nextSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <section className="hero">
       <div className={`hero-background ${isLoaded ? "active" : ""}`}>
@@ -39,7 +54,10 @@ const Hero = () => {
               </p>
             </div>
 
-            <div className={`scroll-indicator ${isLoaded ? "active" : ""}`}>
+            <div
+              className={`scroll-indicator ${isLoaded ? "active" : ""}`}
+              onClick={scrollToNextSection}
+            >
               <div className="mouse">
                 <div className="wheel"></div>
               </div>

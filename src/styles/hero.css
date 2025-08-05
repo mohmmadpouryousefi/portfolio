@@ -279,11 +279,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
+  margin-top: 40px;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  transition-delay: 1.2s;
-  align-self: flex-start;
+  transition: all 0.8s ease;
+  transition-delay: 1.4s;
 }
 
 .scroll-indicator.active {
@@ -294,39 +295,98 @@
 .mouse {
   width: 30px;
   height: 50px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid #F29B55;
   border-radius: 20px;
   position: relative;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mouse:hover {
+  border-color: #F5D206;
+  transform: scale(1.1);
 }
 
 .wheel {
   width: 6px;
   height: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 4px;
-  animation: scrollAnimation 2s ease infinite;
+  background: #F29B55;
+  border-radius: 3px;
   position: absolute;
-  top: 10px;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scroll-wheel 2s infinite ease-in-out;
+  transition: background-color 0.3s ease;
 }
 
-@keyframes scrollAnimation {
+.mouse:hover .wheel {
+  background: #F5D206;
+}
+
+/* Scroll Animation */
+@keyframes scroll-wheel {
   0% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(-50%) translateY(0);
   }
-
+  50% {
+    opacity: 0.5;
+    transform: translateX(-50%) translateY(15px);
+  }
   100% {
-    opacity: 0;
-    transform: translateY(15px);
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
 }
 
+/* Scroll Text */
 .scroll-text {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  color: #4a5568;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.scroll-indicator:hover .scroll-text {
+  color: #F29B55;
+  opacity: 1;
+}
+
+/* Alternative scroll wheel animation (bouncing effect) */
+@keyframes scroll-wheel-bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(-50%) translateY(8px);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(-50%) translateY(16px);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateX(-50%) translateY(8px);
+    opacity: 0.7;
+  }
+}
+
+/* Pulse animation variant */
+@keyframes scroll-wheel-pulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) scale(0.8);
+    opacity: 0.6;
+  }
 }
 
 /* Responsive design */
@@ -399,6 +459,25 @@
   .animated-shape {
     opacity: 0.08;
   }
+
+  .scroll-indicator {
+    margin-top: 30px;
+  }
+  
+  .mouse {
+    width: 25px;
+    height: 42px;
+  }
+  
+  .wheel {
+    width: 5px;
+    height: 8px;
+    top: 6px;
+  }
+  
+  .scroll-text {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -417,6 +496,21 @@
   .primary-btn,
   .secondary-btn {
     padding: 14px 20px;
+  }
+
+  .scroll-indicator {
+    margin-top: 25px;
+  }
+  
+  .mouse {
+    width: 22px;
+    height: 38px;
+  }
+  
+  .wheel {
+    width: 4px;
+    height: 7px;
+    top: 5px;
   }
 }
 
