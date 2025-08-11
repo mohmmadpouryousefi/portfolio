@@ -1,4 +1,3 @@
-// Load environment variables first
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -7,10 +6,10 @@ import authRoutes from "./routes/auth.js";
 import postRoutes from "./routes/posts.js";
 
 // Load environment variables
-
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 10000; // Use 10000 for Render
 
 // Middleware
 app.use(
@@ -25,54 +24,73 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-app.use(express.json({ limit: "10mb" })); // Increased limit for larger payloads
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/posts", postRoutes);
 
-// Basic route
+// Basic route for health check
 app.get("/", (req, res) => {
   res.json({
     success: true,
     message: "Welcome to the Portfolio API",
+    timestamp: new Date().toISOString(),
+    mongodb: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
   });
 });
 
-const PORT = process.env.PORT || 5000;
+// Health check route
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    mongodb: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
+  });
+});
 
-// Connect to MongoDB
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/posts", postRoutes);
 
+// Start server FIRST, then connect to MongoDB
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
+  console.log(`🌐 Health check: http://0.0.0.0:${PORT}/health`);
+  
+  // Connect to MongoDB after server starts
+  connectDB();
+});
+
+// Connect to MongoDB (separate from server startup)
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("✅ Connected to MongoDB successfully'");
-
-    // Start server after successful DB connection
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
+    console.log("🔄 Attempting to connect to MongoDB...");
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
+    console.log("✅ Connected to MongoDB successfully");
   } catch (error) {
     console.error("❌ Error connecting to MongoDB:", error.message);
-
-    // Check if it's a network/DNS issue
-    if (error.code === "ENOTFOUND") {
-      console.log("💡 Possible solutions:");
-      console.log("   1. Check your internet connection");
-      console.log("   2. Verify your MongoDB Atlas cluster is running");
-      console.log(
-        "   3. Check if your IP address is whitelisted in MongoDB Atlas"
-      );
-      console.log("   4. Verify your MONGO_URI in .env file");
-    }
-    process.exit(1);
+    
+    // Don't exit the process - let the server continue running
+    // This allows Render to detect the port even if MongoDB fails
+    console.log("⚠️ Server will continue running without MongoDB");
+    console.log("💡 Please check your MONGO_URI environment variable");
+    
+    // Retry connection after 10 seconds
+    setTimeout(connectDB, 10000);
   }
 };
 
-process.on("unhandledRejection", (err) => {
-  console.log("❌ Unhandled Promise Rejection:", err.message);
-  process.exit(1);
+// Graceful shutdown
+process.on("SIGTERM", () => {
+  console.log("👋 SIGTERM received. Shutting down gracefully...");
+  mongoose.connection.close();
+  process.exit(0);
 });
 
-connectDB();
+process.on("unhandledRejection", (err) => {
+  console.log("❌ Unhandled Promise Rejection:", err.message);
+  // Don't exit on unhandled rejections in production
+});
