@@ -49,9 +49,9 @@ const connectDB = async () => {
     console.log("✅ Connected to MongoDB successfully'");
 
     // Start server after successful DB connection
-    app.listen(PORT, () => {
-      console.log(`🚀 Server successfully running on port ${PORT}`);
-      console.log(`📍 API URL: http://localhost:${PORT}`);
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
     });
   } catch (error) {
     console.error("❌ Error connecting to MongoDB:", error.message);
