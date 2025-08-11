@@ -22,10 +22,10 @@ import {
   SiTailwindcss,
   SiMui,
   SiChakraui,
-  SiAntdesign,
   SiMongodb,
   SiPostgresql,
   SiMysql,
+  SiSwagger,
 } from "react-icons/si";
 
 const Skills = () => {
@@ -163,11 +163,8 @@ const Skills = () => {
               <span className="skill-badge">
                 <SiChakraui /> Chakra UI
               </span>
-              <span className="skill-badge">
-                <SiAntdesign /> Ant Design
-              </span>
+
               <span className="skill-badge">SASS</span>
-              <span className="skill-badge">LESS</span>
               <span className="skill-badge">Bootstrap</span>
             </div>
           </div>
@@ -246,17 +243,14 @@ const Skills = () => {
                   <span>Azure</span>
                 </div>
                 <div className="cloud-item">
-                  <FaCloud className="cloud-icon" />
-                  <span>GCP</span>
+                  <FaGitAlt className="cloud-icon" />
+                  <span>Git</span>
                 </div>
               </div>
 
               <div className="skills-badges devops-badges">
                 <span className="skill-badge">
                   <FaDocker /> Docker
-                </span>
-                <span className="skill-badge">
-                  <FaGitAlt /> Git
                 </span>
                 <span className="skill-badge">GitHub</span>
                 <span className="skill-badge">GitLab</span>
@@ -266,7 +260,7 @@ const Skills = () => {
           </div>
 
           {/* Testing & Project Management */}
-          <div className="skills-category-card">
+          {/* <div className="skills-category-card">
             <h3>Testing & Project Management</h3>
             <div className="skills-badges">
               <span className="skill-badge">Jest</span>
@@ -278,7 +272,7 @@ const Skills = () => {
               <span className="skill-badge">Asana</span>
               <span className="skill-badge">Scrum</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

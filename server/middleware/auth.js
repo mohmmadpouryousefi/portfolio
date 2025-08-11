@@ -18,7 +18,7 @@ const auth = (req, res, next) => {
     }
 
     // Verify JWT_SECRET exists
-    const JWT_SECRET = process?.env?.JWT_SECRET || '';
+    const JWT_SECRET = process?.env?.JWT_SECRET || "";
     if (!JWT_SECRET) {
       console.error("JWT_SECRET is not defined in environment variables");
       return res.status(500).json({
