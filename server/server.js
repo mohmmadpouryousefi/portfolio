@@ -16,13 +16,13 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "http://localhost:5173",
-      "http://localhost:3000",
-      "http://127.0.0.1:5173",
+      "http://localhost:5173", // For development
+      "https://portfolio-1z8.pages.dev", // Your production frontend
+      "https://portfolio-jwp8.onrender.com", // Your backend (for any self-requests)
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization", "x-auth-token"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(express.json({ limit: "10mb" })); // Increased limit for larger payloads
