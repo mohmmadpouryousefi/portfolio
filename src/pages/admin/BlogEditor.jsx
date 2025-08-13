@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/ui/button";
 import "../../styles/admin/blogEditor.css";
 
 const BlogEditor = () => {
@@ -95,9 +96,13 @@ const BlogEditor = () => {
       <div className="editor-container">
         <div className="editor-header">
           <h1>Create New Blog Post</h1>
-          <button onClick={handleLogout} className="logout-btn">
+          <Button 
+            onClick={handleLogout} 
+            variant="outline"
+            size="sm"
+          >
             Logout
-          </button>
+          </Button>
         </div>
 
         {error && <div className="error-message">{error}</div>}
@@ -168,20 +173,19 @@ const BlogEditor = () => {
           </div>
 
           <div className="form-actions">
-            <button
+            <Button
               type="button"
-              className="cancel-btn"
+              variant="outline"
               onClick={() => navigate("/blog")}
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
               type="submit"
-              className="submit-btn"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Publishing..." : "Publish Post"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

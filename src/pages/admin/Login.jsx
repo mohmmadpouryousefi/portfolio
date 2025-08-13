@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/ui/button";
 import "../../styles/admin/login.css";
 
 const Login = () => {
@@ -87,9 +88,13 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="login-btn" disabled={isLoading}>
+          <Button 
+            type="submit" 
+            className="w-full" 
+            disabled={isLoading}
+          >
             {isLoading ? "Logging in..." : "Login"}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

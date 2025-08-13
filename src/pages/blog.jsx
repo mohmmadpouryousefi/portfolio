@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../styles/blog.css";
-
+import { Button } from "../components/ui/button";
+// If your shadcn Button is in a different path, adjust the import accordingly.
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -78,15 +79,14 @@ const Blog = () => {
 
       <div className="blog-categories">
         {categories.map((category) => (
-          <button
+          <Button
             key={category}
-            className={`category-btn ${
-              activeCategory === category ? "active" : ""
-            }`}
+            variant={activeCategory === category ? "default" : "outline"}
+            className="mx-1"
             onClick={() => handleCategoryChange(category)}
           >
             {category}
-          </button>
+          </Button>
         ))}
       </div>
 
