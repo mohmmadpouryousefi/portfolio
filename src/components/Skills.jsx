@@ -25,7 +25,7 @@ import {
   SiMongodb,
   SiPostgresql,
   SiMysql,
-  SiSwagger,
+  SiGreensock,
 } from "react-icons/si";
 
 const Skills = () => {
@@ -46,7 +46,7 @@ const Skills = () => {
                   <div className="skill-bar">
                     <div
                       className="skill-progress"
-                      style={{ width: "95%" }}
+                      style={{ width: "85%" }}
                     ></div>
                   </div>
                 </div>
@@ -59,7 +59,7 @@ const Skills = () => {
                   <div className="skill-bar">
                     <div
                       className="skill-progress"
-                      style={{ width: "85%" }}
+                      style={{ width: "65%" }}
                     ></div>
                   </div>
                 </div>
@@ -90,7 +90,7 @@ const Skills = () => {
                   </div>
                 </div>
               </div>
-              <div className="skill-item">
+              {/* <div className="skill-item">
                 <SiPhp className="skill-icon php-icon" />
                 <div>
                   <h4>PHP</h4>
@@ -101,7 +101,7 @@ const Skills = () => {
                     ></div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -143,6 +143,19 @@ const Skills = () => {
                     <div
                       className="skill-progress"
                       style={{ width: "88%" }}
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="skill-item">
+                <SiGreensock className="skill-icon gsap-icon" />
+                <div>
+                  <h4>GSAP</h4>
+                  <div className="skill-bar">
+                    <div
+                      className="skill-progress"
+                      style={{ width: "75%" }}
                     ></div>
                   </div>
                 </div>
