@@ -8,11 +8,20 @@ const Projects = () => {
     {
       id: 1,
       title: "🤖 Discord Assistant Bot",
-      description: "A professional multi-platform assistant bot with advanced features and enterprise-grade architecture. Supports both Discord and Telegram platforms with weather data, QR code generation, and currency exchange.",
-      longDescription: "Discord Assistant Bot is a sophisticated, multi-platform chatbot that operates seamlessly across Discord and Telegram platforms. Built with modern Node.js architecture, it features enterprise-grade logging, centralized configuration management, and an extensible command system.",
+      description:
+        "A professional multi-platform assistant bot with advanced features and enterprise-grade architecture. Supports both Discord and Telegram platforms with weather data, QR code generation, and currency exchange.",
+      longDescription:
+        "Discord Assistant Bot is a sophisticated, multi-platform chatbot that operates seamlessly across Discord and Telegram platforms. Built with modern Node.js architecture, it features enterprise-grade logging, centralized configuration management, and an extensible command system.",
       image: "/api/placeholder/400/250",
-      videoUrl: "https://www.youtube.com/embed/YOUR_VIDEO_ID", // Replace with actual video URL
-      technologies: ["Node.js", "Discord.js", "Telegram API", "Winston", "WeatherAPI", "MongoDB"],
+      videoUrl: "/videos/DiscordAssistantBot.mp4", // Replace with actual video URL
+      technologies: [
+        "Node.js",
+        "Discord.js",
+        "Telegram API",
+        "Winston",
+        "WeatherAPI",
+        "MongoDB",
+      ],
       features: [
         "🎮 Dual Platform Support (Discord & Telegram)",
         "🌤️ Real-time Weather Data",
@@ -20,37 +29,48 @@ const Projects = () => {
         "🔧 Professional Logging System",
         "⚙️ Centralized Configuration",
         "🎛️ Interactive Menus",
-        "🔒 Enterprise-grade Architecture"
+        "🔒 Enterprise-grade Architecture",
       ],
       githubUrl: "https://github.com/mohmmadpouryousefi/Discord-Assistant-Bot",
       liveUrl: null,
-      category: "Bot Development"
+      category: "Bot Development",
     },
     {
       id: 2,
       title: "🚀 Portfolio Website",
-      description: "A modern, responsive portfolio website showcasing cutting-edge web development skills with stunning GSAP animations and professional design.",
-      longDescription: "This portfolio website demonstrates modern web development practices with React 18, GSAP animations, responsive design, and professional UI/UX. Features include typewriter animations, smooth scrolling navigation, and mobile-first design.",
+      description:
+        "A modern, responsive portfolio website showcasing cutting-edge web development skills with stunning GSAP animations and professional design.",
+      longDescription:
+        "This portfolio website demonstrates modern web development practices with React 18, GSAP animations, responsive design, and professional UI/UX. Features include typewriter animations, smooth scrolling navigation, and mobile-first design.",
       image: "/api/placeholder/400/250",
       videoUrl: "/videos/portfolio.mp4", // Local video file
-      technologies: ["React 18", "GSAP", "Tailwind CSS", "Vite", "Node.js", "Express"],
+      technologies: [
+        "React 18",
+        "GSAP",
+        "Tailwind CSS",
+        "Vite",
+        "Node.js",
+        "Express",
+      ],
       features: [
         "✨ GSAP-Powered Animations",
         "📱 Mobile-First Responsive Design",
         "🎨 Glass Morphism Effects",
         "🧭 Smooth Scroll Navigation",
         "⚡ Performance Optimized",
-        "🎯 Modern UI Components"
+        "🎯 Modern UI Components",
       ],
       githubUrl: "https://github.com/mohmmadpouryousefi/portfolio",
       liveUrl: "https://portfolio-1z8.pages.dev",
-      category: "Web Development"
+      category: "Web Development",
     },
     {
       id: 3,
       title: "📊 Data Analytics Dashboard",
-      description: "A comprehensive data visualization dashboard with real-time analytics, interactive charts, and modern UI components.",
-      longDescription: "Coming soon! A powerful analytics dashboard featuring real-time data visualization, interactive charts, and comprehensive reporting capabilities.",
+      description:
+        "A comprehensive data visualization dashboard with real-time analytics, interactive charts, and modern UI components.",
+      longDescription:
+        "Coming soon! A powerful analytics dashboard featuring real-time data visualization, interactive charts, and comprehensive reporting capabilities.",
       image: "/api/placeholder/400/250",
       videoUrl: null,
       technologies: ["React", "D3.js", "Chart.js", "Node.js", "PostgreSQL"],
@@ -60,12 +80,12 @@ const Projects = () => {
         "🔄 Live Data Updates",
         "📱 Responsive Dashboard",
         "📋 Custom Report Generation",
-        "🔍 Advanced Filtering"
+        "🔍 Advanced Filtering",
       ],
       githubUrl: null,
       liveUrl: null,
-      category: "Data Visualization"
-    }
+      category: "Data Visualization",
+    },
   ];
 
   const openVideoModal = (videoUrl) => {
@@ -90,7 +110,7 @@ const Projects = () => {
           {projects.map((project) => (
             <div key={project.id} className="project-card">
               <div className="project-image-container">
-                {project.videoUrl && project.videoUrl.includes('.mp4') ? (
+                {project.videoUrl && project.videoUrl.includes(".mp4") ? (
                   <video
                     src={project.videoUrl}
                     autoPlay
@@ -126,7 +146,9 @@ const Projects = () => {
 
                 <div className="project-tech">
                   {project.technologies.map((tech, index) => (
-                    <span key={index} className="tech-tag">{tech}</span>
+                    <span key={index} className="tech-tag">
+                      {tech}
+                    </span>
                   ))}
                 </div>
 
@@ -173,7 +195,7 @@ const Projects = () => {
                 ✕
               </button>
               <div className="video-container">
-                {selectedVideo && selectedVideo.includes('.mp4') ? (
+                {selectedVideo && selectedVideo.includes(".mp4") ? (
                   <video
                     src={selectedVideo}
                     controls
@@ -181,7 +203,7 @@ const Projects = () => {
                     loop
                     muted
                     className="video-player"
-                    style={{ width: '100%', height: '100%' }}
+                    style={{ width: "100%", height: "100%" }}
                   >
                     Your browser does not support the video tag.
                   </video>
