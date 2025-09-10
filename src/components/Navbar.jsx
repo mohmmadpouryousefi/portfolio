@@ -18,7 +18,7 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100;
-      
+
       // Update navbar background
       if (window.scrollY > 50) {
         setScrolled(true);
@@ -27,14 +27,17 @@ const Navbar = () => {
       }
 
       // Detect active section
-      const sections = ['hero', 'about', 'skills', 'projects', 'contact'];
-      const currentSection = sections.find(section => {
+      const sections = ["hero", "about", "skills", "projects", "contact"];
+      const currentSection = sections.find((section) => {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
           const elementTop = rect.top + window.scrollY;
           const elementHeight = rect.height;
-          return scrollPosition >= elementTop && scrollPosition < elementTop + elementHeight;
+          return (
+            scrollPosition >= elementTop &&
+            scrollPosition < elementTop + elementHeight
+          );
         }
         return false;
       });
@@ -58,25 +61,33 @@ const Navbar = () => {
       // Opening animation
       gsap.set(menuRef.current, { display: "flex" });
       gsap.set(overlayRef.current, { display: "block" });
-      
+
       const tl = gsap.timeline();
       tl.to(overlayRef.current, {
         opacity: 1,
         duration: 0.3,
-        ease: "power2.out"
+        ease: "power2.out",
       })
-      .to(menuRef.current, {
-        x: 0,
-        duration: 0.4,
-        ease: "power3.out"
-      }, "-=0.1")
-      .to(".mobile-menu-item", {
-        opacity: 1,
-        y: 0,
-        duration: 0.3,
-        stagger: 0.1,
-        ease: "power2.out"
-      }, "-=0.2");
+        .to(
+          menuRef.current,
+          {
+            x: 0,
+            duration: 0.4,
+            ease: "power3.out",
+          },
+          "-=0.1"
+        )
+        .to(
+          ".mobile-menu-item",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            stagger: 0.1,
+            ease: "power2.out",
+          },
+          "-=0.2"
+        );
     } else {
       // Closing animation
       const tl = gsap.timeline();
@@ -85,21 +96,29 @@ const Navbar = () => {
         y: -20,
         duration: 0.2,
         stagger: 0.05,
-        ease: "power2.in"
+        ease: "power2.in",
       })
-      .to(menuRef.current, {
-        x: "100%",
-        duration: 0.3,
-        ease: "power3.in"
-      }, "-=0.1")
-      .to(overlayRef.current, {
-        opacity: 0,
-        duration: 0.2,
-        ease: "power2.in"
-      }, "-=0.2")
-      .set([menuRef.current, overlayRef.current], { 
-        display: "none" 
-      });
+        .to(
+          menuRef.current,
+          {
+            x: "100%",
+            duration: 0.3,
+            ease: "power3.in",
+          },
+          "-=0.1"
+        )
+        .to(
+          overlayRef.current,
+          {
+            opacity: 0,
+            duration: 0.2,
+            ease: "power2.in",
+          },
+          "-=0.2"
+        )
+        .set([menuRef.current, overlayRef.current], {
+          display: "none",
+        });
     }
   };
 
@@ -113,13 +132,13 @@ const Navbar = () => {
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape' && isMenuOpen) {
+      if (e.key === "Escape" && isMenuOpen) {
         closeMenu();
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
   }, [isMenuOpen]);
 
   // Smooth scroll to section function
@@ -155,8 +174,8 @@ const Navbar = () => {
           <div className="navbar-links-container desktop-nav">
             <ul className="navbar-links">
               <li>
-                <a 
-                  href="#hero" 
+                <a
+                  href="#hero"
                   onClick={(e) => scrollToSection("hero", e)}
                   className={activeSection === "hero" ? "active" : ""}
                 >
@@ -164,8 +183,8 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  href="#about" 
+                <a
+                  href="#about"
                   onClick={(e) => scrollToSection("about", e)}
                   className={activeSection === "about" ? "active" : ""}
                 >
@@ -178,8 +197,8 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <a 
-                  href="#skills" 
+                <a
+                  href="#skills"
                   onClick={(e) => scrollToSection("skills", e)}
                   className={activeSection === "skills" ? "active" : ""}
                 >
@@ -196,8 +215,8 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  href="#contact" 
+                <a
+                  href="#contact"
                   onClick={(e) => scrollToSection("contact", e)}
                   className={activeSection === "contact" ? "active" : ""}
                 >
@@ -219,7 +238,7 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div 
+      <div
         ref={overlayRef}
         className="mobile-menu-overlay"
         onClick={closeMenu}
@@ -227,7 +246,7 @@ const Navbar = () => {
       ></div>
 
       {/* Mobile Menu */}
-      <div 
+      <div
         ref={menuRef}
         className="mobile-menu"
         style={{ display: "none", transform: "translateX(100%)" }}
@@ -245,8 +264,8 @@ const Navbar = () => {
         <nav className="mobile-menu-nav">
           <ul className="mobile-menu-list">
             <li className="mobile-menu-item">
-              <a 
-                href="#hero" 
+              <a
+                href="#hero"
                 onClick={(e) => scrollToSection("hero", e)}
                 className={activeSection === "hero" ? "active" : ""}
               >
@@ -255,8 +274,8 @@ const Navbar = () => {
               </a>
             </li>
             <li className="mobile-menu-item">
-              <a 
-                href="#about" 
+              <a
+                href="#about"
                 onClick={(e) => scrollToSection("about", e)}
                 className={activeSection === "about" ? "active" : ""}
               >
@@ -271,8 +290,8 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="mobile-menu-item">
-              <a 
-                href="#skills" 
+              <a
+                href="#skills"
                 onClick={(e) => scrollToSection("skills", e)}
                 className={activeSection === "skills" ? "active" : ""}
               >
@@ -291,8 +310,8 @@ const Navbar = () => {
               </a>
             </li>
             <li className="mobile-menu-item">
-              <a 
-                href="#contact" 
+              <a
+                href="#contact"
                 onClick={(e) => scrollToSection("contact", e)}
                 className={activeSection === "contact" ? "active" : ""}
               >
@@ -304,16 +323,16 @@ const Navbar = () => {
 
           <div className="mobile-menu-footer">
             <div className="social-links">
-              <a 
-                href="https://github.com/mohmmadpouryousefi" 
-                target="_blank" 
+              <a
+                href="https://github.com/mohmmadpouryousefi"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="social-link"
               >
                 GitHub
               </a>
-              <a 
-                href="mailto:mohammadpouryousefi@gmail.com" 
+              <a
+                href="mailto:mohammadpouryousefi@gmail.com"
                 className="social-link"
               >
                 Email
