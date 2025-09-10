@@ -10,16 +10,16 @@ const Footer = () => {
   // Smooth scroll to section function
   const scrollToSection = (sectionId, event) => {
     event.preventDefault();
-    
+
     const targetSection = document.getElementById(sectionId);
     if (targetSection) {
       gsap.to(window, {
         duration: 1.2,
         scrollTo: {
           y: targetSection,
-          offsetY: 80 // Account for navbar height
+          offsetY: 80, // Account for navbar height
         },
-        ease: "power2.inOut"
+        ease: "power2.inOut",
       });
     }
   };
@@ -36,34 +36,22 @@ const Footer = () => {
           <h4>Links</h4>
           <ul>
             <li>
-              <a 
-                href="#about" 
-                onClick={(e) => scrollToSection('about', e)}
-              >
+              <a href="#about" onClick={(e) => scrollToSection("about", e)}>
                 About
               </a>
             </li>
             <li>
-              <a 
-                href="#skills" 
-                onClick={(e) => scrollToSection('skills', e)}
-              >
+              <a href="#skills" onClick={(e) => scrollToSection("skills", e)}>
                 Skills
               </a>
             </li>
             <li>
-              <a 
-                href="#hero" 
-                onClick={(e) => scrollToSection('hero', e)}
-              >
+              <a href="#hero" onClick={(e) => scrollToSection("hero", e)}>
                 Home
               </a>
             </li>
             <li>
-              <a 
-                href="#contact" 
-                onClick={(e) => scrollToSection('contact', e)}
-              >
+              <a href="#contact" onClick={(e) => scrollToSection("contact", e)}>
                 Contact
               </a>
             </li>

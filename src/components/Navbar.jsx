@@ -46,9 +46,9 @@ const Navbar = () => {
         duration: 1.2,
         scrollTo: {
           y: targetSection,
-          offsetY: 80 // Account for navbar height
+          offsetY: 80, // Account for navbar height
         },
-        ease: "power2.inOut"
+        ease: "power2.inOut",
       });
     }
   };
@@ -63,18 +63,12 @@ const Navbar = () => {
         <div className="navbar-links-container">
           <ul className={`navbar-links ${isMenuOpen ? "active" : ""}`}>
             <li>
-              <a 
-                href="#hero" 
-                onClick={(e) => scrollToSection('hero', e)}
-              >
+              <a href="#hero" onClick={(e) => scrollToSection("hero", e)}>
                 Home
               </a>
             </li>
             <li>
-              <a 
-                href="#about" 
-                onClick={(e) => scrollToSection('about', e)}
-              >
+              <a href="#about" onClick={(e) => scrollToSection("about", e)}>
                 About
               </a>
             </li>
@@ -84,26 +78,20 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <a 
-                href="#skills" 
-                onClick={(e) => scrollToSection('skills', e)}
-              >
+              <a href="#skills" onClick={(e) => scrollToSection("skills", e)}>
                 Skills
               </a>
             </li>
             <li>
-              <a 
-                href="#projects" 
-                onClick={(e) => scrollToSection('projects', e)}
+              <a
+                href="#projects"
+                onClick={(e) => scrollToSection("projects", e)}
               >
                 Projects
               </a>
             </li>
             <li>
-              <a 
-                href="#contact" 
-                onClick={(e) => scrollToSection('contact', e)}
-              >
+              <a href="#contact" onClick={(e) => scrollToSection("contact", e)}>
                 Contact
               </a>
             </li>

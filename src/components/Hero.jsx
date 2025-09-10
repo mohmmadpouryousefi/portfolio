@@ -13,22 +13,46 @@ const Hero = () => {
 
   useEffect(() => {
     // Set initial state for letters
-    gsap.set(".staggerbox", { 
-      y: 100, 
-      opacity: 0, 
+    gsap.set(".staggerbox", {
+      y: 100,
+      opacity: 0,
       rotationX: -90,
-      transformOrigin: "center bottom"
+      transformOrigin: "center bottom",
     });
 
     // Set initial state for other elements
-    gsap.set([".hero-greeting", ".hero-role", ".hero-tagline", ".hero-cta", ".scroll-indicator"], {
-      y: 50,
-      opacity: 0
+    gsap.set(
+      [".hero-greeting", ".hero-role", ".hero-cta", ".scroll-indicator"],
+      {
+        y: 50,
+        opacity: 0,
+      }
+    );
+
+    // Special setup for tagline typewriter effect
+    gsap.set(".hero-tagline", {
+      y: 30,
+      opacity: 0,
     });
+
+    // Split tagline text into characters for animation
+    const taglineText =
+      "Crafting modern web experiences with cutting-edge technologies";
+    const taglineContainer = document.querySelector(".tagline-text");
+    if (taglineContainer) {
+      taglineContainer.innerHTML = "";
+      taglineText.split("").forEach((char, i) => {
+        const span = document.createElement("span");
+        span.textContent = char === " " ? "\u00A0" : char; // Non-breaking space
+        span.className = "tagline-char";
+        span.style.opacity = "0";
+        taglineContainer.appendChild(span);
+      });
+    }
 
     gsap.set([".animated-shape"], {
       scale: 0,
-      rotation: 0
+      rotation: 0,
     });
 
     // Create timeline for coordinated animations
@@ -40,54 +64,112 @@ const Hero = () => {
       rotation: 360,
       duration: 1.5,
       stagger: 0.2,
-      ease: "back.out(1.7)"
+      ease: "back.out(1.7)",
     })
-    
-    // Animate name letters with stagger effect
-    .to(".staggerbox", {
-      y: 0,
-      opacity: 1,
-      rotationX: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: "back.out(1.7)"
-    }, "-=1")
-    
-    // Animate other content
-    .to(".hero-greeting", { 
-      y: 0, 
-      opacity: 1, 
-      duration: 0.6,
-      ease: "power2.out"
-    }, "-=0.5")
-    
-    .to(".hero-role", { 
-      y: 0, 
-      opacity: 1, 
-      duration: 0.6,
-      ease: "power2.out"
-    }, "-=0.4")
-    
-    .to(".hero-tagline", { 
-      y: 0, 
-      opacity: 1, 
-      duration: 0.6,
-      ease: "power2.out"
-    }, "-=0.4")
-    
-    .to(".hero-cta", { 
-      y: 0, 
-      opacity: 1, 
-      duration: 0.6,
-      ease: "power2.out"
-    }, "-=0.4")
-    
-    .to(".scroll-indicator", { 
-      y: 0, 
-      opacity: 1, 
-      duration: 0.6,
-      ease: "power2.out"
-    }, "-=0.3");
+
+      // Animate name letters with stagger effect
+      .to(
+        ".staggerbox",
+        {
+          y: 0,
+          opacity: 1,
+          rotationX: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "back.out(1.7)",
+        },
+        "-=1"
+      )
+
+      // Animate other content
+      .to(
+        ".hero-greeting",
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.5"
+      )
+
+      .to(
+        ".hero-role",
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      )
+
+      .to(
+        ".hero-tagline",
+        {
+          y: 0,
+          opacity: 2,
+          stagger: 0.1,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      )
+
+      // Typewriter effect for tagline text
+      .to(
+        ".tagline-char",
+        {
+          opacity: 1,
+          duration: 0.03,
+          stagger: 0.02,
+          ease: "power1.inOut",
+        },
+        "-=0.2"
+      )
+
+      // Add a subtle glow effect after typewriter completes
+      .to(
+        ".tagline-text",
+        {
+          textShadow: "0 0 20px rgba(242, 155, 85, 0.3)",
+          duration: 0.8,
+          ease: "power2.out",
+        },
+        "+=0.2"
+      )
+
+      // Fade out cursor after typing completes
+      .to(
+        ".tagline-cursor",
+        {
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+        "+=1.5"
+      )
+
+      .to(
+        ".hero-cta",
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      )
+
+      .to(
+        ".scroll-indicator",
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.3"
+      );
 
     // Add continuous floating animation for shapes
     gsap.to(".shape1", {
@@ -97,7 +179,7 @@ const Hero = () => {
       duration: 4,
       repeat: -1,
       yoyo: true,
-      ease: "sine.inOut"
+      ease: "sine.inOut",
     });
 
     gsap.to(".shape2", {
@@ -107,7 +189,7 @@ const Hero = () => {
       duration: 3,
       repeat: -1,
       yoyo: true,
-      ease: "sine.inOut"
+      ease: "sine.inOut",
     });
 
     gsap.to(".shape3", {
@@ -117,13 +199,21 @@ const Hero = () => {
       duration: 5,
       repeat: -1,
       yoyo: true,
-      ease: "sine.inOut"
+      ease: "sine.inOut",
     });
 
     // Cleanup function
     return () => {
       tl.kill();
-      gsap.killTweensOf([".staggerbox", ".animated-shape", ".hero-greeting", ".hero-role", ".hero-tagline", ".hero-cta", ".scroll-indicator"]);
+      gsap.killTweensOf([
+        ".staggerbox",
+        ".animated-shape",
+        ".hero-greeting",
+        ".hero-role",
+        ".hero-tagline",
+        ".hero-cta",
+        ".scroll-indicator",
+      ]);
     };
   }, []);
 
@@ -135,7 +225,7 @@ const Hero = () => {
         rotation: 10,
         color: "#F29B55",
         duration: 0.3,
-        ease: "back.out(1.7)"
+        ease: "back.out(1.7)",
       });
     }
   };
@@ -147,7 +237,7 @@ const Hero = () => {
         rotation: 0,
         color: "inherit",
         duration: 0.3,
-        ease: "back.out(1.4)"
+        ease: "back.out(1.4)",
       });
     }
   };
@@ -155,18 +245,19 @@ const Hero = () => {
   // Function to scroll to next section with GSAP smooth scroll
   const scrollToNextSection = () => {
     // Use element with ID for better React integration
-    const aboutSection = document.getElementById('about') || 
-                         document.getElementById('skills') || 
-                         document.getElementById('projects');
+    const aboutSection =
+      document.getElementById("about") ||
+      document.getElementById("skills") ||
+      document.getElementById("projects");
 
     if (aboutSection) {
       gsap.to(window, {
         duration: 1.5,
         scrollTo: {
           y: aboutSection,
-          offsetY: 0
+          offsetY: 0,
         },
-        ease: "power2.inOut"
+        ease: "power2.inOut",
       });
     }
   };
@@ -188,33 +279,31 @@ const Hero = () => {
 
             <div className="name-wrapper">
               <h1 className="hero-name" ref={nameRef}>
-                {["M", "o", "h", "a", "m", "m", "a", "d"].map((letter, index) => (
-                  <div
-                    key={index}
-                    ref={(el) => (letterRefs.current[index] = el)}
-                    className="staggerbox"
-                    onMouseEnter={() => handleLetterMouseEnter(index)}
-                    onMouseLeave={() => handleLetterMouseLeave(index)}
-                  >
-                    {letter}
-                  </div>
-                ))}
+                {["M", "o", "h", "a", "m", "m", "a", "d"].map(
+                  (letter, index) => (
+                    <div
+                      key={index}
+                      ref={(el) => (letterRefs.current[index] = el)}
+                      className="staggerbox"
+                      onMouseEnter={() => handleLetterMouseEnter(index)}
+                      onMouseLeave={() => handleLetterMouseLeave(index)}
+                    >
+                      {letter}
+                    </div>
+                  )
+                )}
               </h1>
-              <div className="hero-role">
-                Web Developer
-              </div>
+              <div className="hero-role">Web Developer</div>
             </div>
 
             <div className="hero-tagline">
               <p>
-                Crafting modern web experiences with cutting-edge technologies
+                <span className="tagline-text"></span>
+                <span className="tagline-cursor">|</span>
               </p>
             </div>
 
-            <div
-              className="scroll-indicator"
-              onClick={scrollToNextSection}
-            >
+            <div className="scroll-indicator" onClick={scrollToNextSection}>
               <div className="mouse">
                 <div className="wheel"></div>
               </div>
