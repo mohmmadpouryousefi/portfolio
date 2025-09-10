@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import "../styles/navbar.css";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom"; // Add this import
+import { Link } from "react-router-dom";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,6 +35,24 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
 
+  // Smooth scroll to section function
+  const scrollToSection = (sectionId, event) => {
+    event.preventDefault();
+    closeMenu();
+
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+      gsap.to(window, {
+        duration: 1.2,
+        scrollTo: {
+          y: targetSection,
+          offsetY: 80 // Account for navbar height
+        },
+        ease: "power2.inOut"
+      });
+    }
+  };
+
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-content">
@@ -41,12 +63,18 @@ const Navbar = () => {
         <div className="navbar-links-container">
           <ul className={`navbar-links ${isMenuOpen ? "active" : ""}`}>
             <li>
-              <a href="#home" onClick={closeMenu}>
+              <a 
+                href="#hero" 
+                onClick={(e) => scrollToSection('hero', e)}
+              >
                 Home
               </a>
             </li>
             <li>
-              <a href="#about" onClick={closeMenu}>
+              <a 
+                href="#about" 
+                onClick={(e) => scrollToSection('about', e)}
+              >
                 About
               </a>
             </li>
@@ -56,17 +84,26 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <a href="#skills" onClick={closeMenu}>
+              <a 
+                href="#skills" 
+                onClick={(e) => scrollToSection('skills', e)}
+              >
                 Skills
               </a>
             </li>
             <li>
-              <a href="#projects" onClick={closeMenu}>
+              <a 
+                href="#projects" 
+                onClick={(e) => scrollToSection('projects', e)}
+              >
                 Projects
               </a>
             </li>
             <li>
-              <a href="#contact" onClick={closeMenu}>
+              <a 
+                href="#contact" 
+                onClick={(e) => scrollToSection('contact', e)}
+              >
                 Contact
               </a>
             </li>

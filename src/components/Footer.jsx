@@ -1,10 +1,31 @@
 import React from "react";
+import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import "../styles/footer.css";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
+gsap.registerPlugin(ScrollToPlugin);
+
 const Footer = () => {
+  // Smooth scroll to section function
+  const scrollToSection = (sectionId, event) => {
+    event.preventDefault();
+    
+    const targetSection = document.getElementById(sectionId);
+    if (targetSection) {
+      gsap.to(window, {
+        duration: 1.2,
+        scrollTo: {
+          y: targetSection,
+          offsetY: 80 // Account for navbar height
+        },
+        ease: "power2.inOut"
+      });
+    }
+  };
+
   return (
-    <footer className="footer">
+    <footer id="contact" className="footer">
       <div className="footer-content">
         <div className="footer-info">
           <h3>MohammadDev</h3>
@@ -15,16 +36,36 @@ const Footer = () => {
           <h4>Links</h4>
           <ul>
             <li>
-              <a href="#about">About</a>
+              <a 
+                href="#about" 
+                onClick={(e) => scrollToSection('about', e)}
+              >
+                About
+              </a>
             </li>
             <li>
-              <a href="#skills">Skills</a>
+              <a 
+                href="#skills" 
+                onClick={(e) => scrollToSection('skills', e)}
+              >
+                Skills
+              </a>
             </li>
             <li>
-              <a href="#projects">Projects</a>
+              <a 
+                href="#hero" 
+                onClick={(e) => scrollToSection('hero', e)}
+              >
+                Home
+              </a>
             </li>
             <li>
-              <a href="#contact">Contact</a>
+              <a 
+                href="#contact" 
+                onClick={(e) => scrollToSection('contact', e)}
+              >
+                Contact
+              </a>
             </li>
           </ul>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import "../styles/hero.css";
@@ -6,9 +6,10 @@ import "../styles/hero.css";
 gsap.registerPlugin(ScrollToPlugin);
 
 const Hero = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
   const heroRef = useRef(null);
   const nameRef = useRef(null);
+  const letterRefs = useRef([]);
+  const aboutSectionRef = useRef(null);
 
   useEffect(() => {
     // Set initial state for letters
@@ -31,9 +32,7 @@ const Hero = () => {
     });
 
     // Create timeline for coordinated animations
-    const tl = gsap.timeline({
-      onComplete: () => setIsLoaded(true)
-    });
+    const tl = gsap.timeline();
 
     // Animate background shapes first
     tl.to(".animated-shape", {
@@ -121,30 +120,6 @@ const Hero = () => {
       ease: "sine.inOut"
     });
 
-    // Add hover effect for name letters
-    const letters = document.querySelectorAll(".staggerbox");
-    letters.forEach((letter) => {
-      letter.addEventListener("mouseenter", () => {
-        gsap.to(letter, {
-          scale: 1.3,
-          rotation: 10,
-          color: "#F29B55",
-          duration: 0.3,
-          ease: "back.out(1.7)"
-        });
-      });
-
-      letter.addEventListener("mouseleave", () => {
-        gsap.to(letter, {
-          scale: 1,
-          rotation: 0,
-          color: "inherit",
-          duration: 0.3,
-          ease: "back.out(1.4)"
-        });
-      });
-    });
-
     // Cleanup function
     return () => {
       tl.kill();
@@ -152,18 +127,43 @@ const Hero = () => {
     };
   }, []);
 
+  // React event handlers for hover effects
+  const handleLetterMouseEnter = (index) => {
+    if (letterRefs.current[index]) {
+      gsap.to(letterRefs.current[index], {
+        scale: 1.3,
+        rotation: 10,
+        color: "#F29B55",
+        duration: 0.3,
+        ease: "back.out(1.7)"
+      });
+    }
+  };
+
+  const handleLetterMouseLeave = (index) => {
+    if (letterRefs.current[index]) {
+      gsap.to(letterRefs.current[index], {
+        scale: 1,
+        rotation: 0,
+        color: "inherit",
+        duration: 0.3,
+        ease: "back.out(1.4)"
+      });
+    }
+  };
+
   // Function to scroll to next section with GSAP smooth scroll
   const scrollToNextSection = () => {
-    const nextSection =
-      document.querySelector(".about") ||
-      document.querySelector(".projects") ||
-      document.querySelector("section:nth-of-type(2)");
+    // Use element with ID for better React integration
+    const aboutSection = document.getElementById('about') || 
+                         document.getElementById('skills') || 
+                         document.getElementById('projects');
 
-    if (nextSection) {
+    if (aboutSection) {
       gsap.to(window, {
         duration: 1.5,
         scrollTo: {
-          y: nextSection,
+          y: aboutSection,
           offsetY: 0
         },
         ease: "power2.inOut"
@@ -172,7 +172,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="hero" ref={heroRef}>
+    <section id="hero" className="hero" ref={heroRef}>
       <div className="hero-background">
         <div className="animated-shape shape1"></div>
         <div className="animated-shape shape2"></div>
@@ -188,14 +188,17 @@ const Hero = () => {
 
             <div className="name-wrapper">
               <h1 className="hero-name" ref={nameRef}>
-                <div className="staggerbox">M</div>
-                <div className="staggerbox">o</div>
-                <div className="staggerbox">h</div>
-                <div className="staggerbox">a</div>
-                <div className="staggerbox">m</div>
-                <div className="staggerbox">m</div>
-                <div className="staggerbox">a</div>
-                <div className="staggerbox">d</div>
+                {["M", "o", "h", "a", "m", "m", "a", "d"].map((letter, index) => (
+                  <div
+                    key={index}
+                    ref={(el) => (letterRefs.current[index] = el)}
+                    className="staggerbox"
+                    onMouseEnter={() => handleLetterMouseEnter(index)}
+                    onMouseLeave={() => handleLetterMouseLeave(index)}
+                  >
+                    {letter}
+                  </div>
+                ))}
               </h1>
               <div className="hero-role">
                 Web Developer
